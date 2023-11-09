@@ -1,0 +1,83 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  7.0                                   |
+|   \\  /    A nd           | Website:  https://openfoam.org                  |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     rheoFoam;
+
+startFrom       latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         0.05;
+
+deltaT          1e-8;
+
+writeControl    runTime; // if 'runTime' is selected, then 'writeInterval' is specified in seconds.
+
+writeInterval   1e-4;
+
+adjustableRunTime yes;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  4;
+
+writeCompression compressed;
+
+timeFormat      general;
+
+timePrecision   4;
+
+graphFormat     raw;
+
+runTimeModifiable yes;
+
+adjustTimeStep yes;
+
+maxCo          0.02;
+
+maxDeltaT      1e-4;
+
+functions
+{
+    #includeFunc probeCenterLine
+    #includeFunc probeCrossPlane
+    #includeFunc probeTopPlane
+
+    /*
+    time
+    {
+        functionObjectLibs ("libutilityFunctionObjects.so");
+        type            time;
+        writeControl   timeStep;
+        writeInterval  1;
+    }
+    residuals
+    {
+    	functionObjectLibs ("libutilityFunctionObjects.so");
+    	type          	residuals;
+        writeControl	timeStep;
+        fields 	(U p tau);
+        writeInterval	1;
+    }
+    */
+    
+}
+
+// ************************************************************************* //

@@ -1,0 +1,44 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  7.0                                   |
+|   \\  /    A nd           | Website:  https://openfoam.org                  |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      constitutiveProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+parameters
+{               
+                type             FENE-CRLog;
+
+                rho              rho [1 -3 0 0 0 0 0] 1000.; // density rho = 1000 kg/m^3
+                etaS             etaS [1 -1 -1 0 0 0 0] 0.001; // solvent viscosity etaS, Pa*s = kg/m/s
+                etaP             etaP [1 -1 -1 0 0 0 0] 0.004; // polymer viscosity etaS, Pa*s = kg/m/s ... eta_0 = eta_p + eta_s
+                lambda           lambda [0 0 1 0 0 0 0] 0.0125; // relaxation time lambda = 12.5 ms
+                
+                // Chain length factor of FENE-type models
+                L2               L2 [0 0 0 0 0 0 0] 1000;
+                
+                // Scaling factors for PTT model - TODO select realistic parameters
+                //epsilon          epsilon [0 0 0 0 0 0 0] 0.01;
+                //zeta             zeta [0 0 0 0 0 0 0] 0.2; 
+                // PTT stress destruction function selector
+                //destructionFunctionType  exponential;
+                
+                stabilization    BSD; //'coupling' may have issues when eta_p>>eta_s, i.e. solvent contribution to stress is small (Section 3.2.1 and 3.4.1)
+}
+
+passiveScalarProperties
+{
+                solvePassiveScalar   off;
+                D                    D [ 0 2 -1 0 0 0 0 ] 1e-9; 
+}
+
+// ************************************************************************* //
